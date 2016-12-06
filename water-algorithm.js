@@ -44,6 +44,7 @@ var calculateSeason = function() {
     if (0 <= currentMonth <= 2 || currentMonth === 11) {
         console.log('winter');
         waterScore += 5;
+        console.log(waterScore);
     } else if (3 <= currentMonth <= 4) {
         waterScore += 10;
     } else if (5 <= currentMonth <= 7) {
@@ -56,9 +57,10 @@ var calculateSeason = function() {
 };
 
 // calculate the soil thang
+var soilConditon = 'LM'
 
 var caclulateSoil = function() {
-        var soilConditon = 'LM'
+     
 
         if (soilConditon === 'L') {
             waterScore += 11;
@@ -66,6 +68,7 @@ var caclulateSoil = function() {
             waterScore += 9;
         } else if (soilConditon === 'LMH') {
             waterScore += 7;
+            console.log(waterScore + 'soil')
         } else if (soilConditon === 'M') {
             waterScore += 5;
         } else if (soilConditon === 'MH') {
@@ -76,15 +79,16 @@ var caclulateSoil = function() {
     }
     // calculate the watering requirements 
 
-var waterCondition = 'M'
+var waterCondition = 'D'
 
 var calculateWater = function() {
         if (waterCondition === 'D') {
-            waterScore += 5;
+            waterScore += 5;    
         } else if (waterCondition === 'DM') {
             waterScore += 10;
         } else if (waterCondition === 'M') {
-            waterScore += 20;
+            waterScore += 30;
+            console.log(waterScore + ' water')
         } else if (waterCondition === 'MWe') {
             waterScore += 30;
         } else if (waterCondition === 'We') {
@@ -99,7 +103,7 @@ var calculateWater = function() {
     }
     // calculate shade requirements 
 
-var shadeCondition = 'SN'
+var shadeCondition = 'N'
 
 var calculateShade = function() {
     if (shadeCondition === 'FS') {
@@ -110,6 +114,7 @@ var calculateShade = function() {
         waterScore += 13;
     } else if (shadeCondition === 'N') {
         waterScore += 16;
+        console.log(waterScore + 'shade')
     } else if (shadeCondition === 'FSN') {
         waterScore += 10;
 
@@ -120,11 +125,11 @@ var calculateShade = function() {
 // function for finding watering score:
 var evaluateScore = function() {
     console.log('this waterscore: ' + waterScore);
-    if (0 <= waterScore && waterScore <= 15) {
+    if (0 <= waterScore && waterScore <= 30) {
         console.log('water every 2 weeks')
-    } else if (16 <= waterScore && waterScore <= 30) {
+    } else if (31 <= waterScore && waterScore <= 40) {
         console.log('water every 10 days')
-    } else if (31 <= waterScore && waterScore <= 45) {
+    } else if (41 <= waterScore && waterScore <= 45) {
         console.log('water every 7 days')
     } else if (46 <= waterScore && waterScore <= 60) {
         console.log('water every 5 days')
