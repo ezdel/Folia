@@ -17,12 +17,11 @@ var db = mongojs(databaseUrl, collections);
 app.use(express.static('public'));
 
 // start a mongoose connection
-mongoose.connect('mongodb://localhost/search');
-var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/db');
 
 // show any mongoose errors
 db.on('error', function(err) {
-  console.log('Mongoose Error: ', err);
+  console.log('Mongoose has an error: ', err);
 });
 
 // once logged in to the db through mongoose, log a success message
@@ -41,14 +40,30 @@ app.get('/', function(req, res) {
 
 // at '/db', render the result of my query if there is no error
 app.get('/db', function(req, res) {
-	db.plants.find().limit(1).pretty(), function(err, query) {
+	// res.send(db.plants.find({}).limit(2));
+	db.plants.find({}, function(err, query) {
 		if(err) {
 			console.log(err);
 		} else {
 			res.json(query);
 		}
-	};
+	});
+
 });
+
+app.post('/search', function(req, res) {
+	if(err) {
+		console.log(err);
+	} else {
+		// the request was sent by the front-end
+		console.log(req.body);
+	}
+});
+
+app.get('/search', function(req, res) {
+	res.send("Searching the database for " + res.body);
+	console.log(res);
+})
 
 // specify my port
 app.listen(3000, function() {
