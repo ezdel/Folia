@@ -57,7 +57,7 @@ var calculateSeason = function() {
 };
 
 // calculate the soil thang
-var soilConditon = 'LM'
+var soilConditon = 'LMH'
 
 var caclulateSoil = function() {
      
@@ -79,7 +79,7 @@ var caclulateSoil = function() {
     }
     // calculate the watering requirements 
 
-var waterCondition = 'D'
+var waterCondition = 'M'
 
 var calculateWater = function() {
         if (waterCondition === 'D') {
@@ -103,7 +103,7 @@ var calculateWater = function() {
     }
     // calculate shade requirements 
 
-var shadeCondition = 'N'
+var shadeCondition = 'SN'
 
 var calculateShade = function() {
     if (shadeCondition === 'FS') {
