@@ -2,8 +2,11 @@ var express = require('express');
 var routes = require('./routes/search.js');
 var mongoose = require('mongoose');
 var path    = require("path");
+var bodyParser = require('body-parser');
 
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // require mongojs and connect to my db
 var mongojs = require('mongojs');
@@ -51,7 +54,7 @@ app.get('/db', function(req, res) {
 
 });
 
-app.post('/search', function(req, res) {
+app.post('/db', function(req, res) {
 	if(err) {
 		console.log(err);
 	} else {
@@ -60,10 +63,27 @@ app.post('/search', function(req, res) {
 	}
 });
 
-app.get('/search', function(req, res) {
-	res.send("Searching the database for " + res.body);
-	console.log(res);
-})
+app.post('/search', function(req, res) {
+	var userSearch = req.body.someData;
+	var happySearch;
+
+	function toTitleCase(user){
+    		happySearch = user.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    		return happySearch;
+	}
+
+toTitleCase(userSearch);
+
+	db.plants.find({"commonName": happySearch}, function(err, query) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.json(query);
+			console.log("soil: " + query[0].soil + " moisture: " + query[0].moisture + " shade: " + query[0].shade);
+
+		}
+	});
+});
 
 // specify my port
 app.listen(3000, function() {
