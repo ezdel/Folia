@@ -5,7 +5,7 @@ $("#searchButton").on('click', function() {
 		type: "POST",
 		dataType: "string",
 		url: "/search",
-		data: searchVal,
+		data: {"someData": searchVal},
 		success: function(response) {			
 			
 		}
