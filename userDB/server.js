@@ -19,7 +19,7 @@ app.use(express.static('public'));
 
 
 // Database configuration with mongoose
-mongoose.connect('mongodb://localhost/week18day3mongoose');
+mongoose.connect('mongodb://localhost/plantDB');
 var db = mongoose.connection;
 
 // show any mongoose errors
@@ -33,7 +33,7 @@ db.once('open', function() {
 });
 
 // Bring in our Models: User & Plants
-var Plants = require('./models/Plant.js');
+var YourPlants = require('./models/YourPlants.js');
 var PlantsLib = require('./models/PlantsLib.js');
 
 
@@ -73,7 +73,7 @@ app.get('/', function(req, res) {
 // This POST route handles the creation of a new book in our mongodb plants collection
 app.post('/submit', function(req, res) {
 
-  var newPlant = new Plants(req.body);
+  var newPlant = new YourPlants(req.body);
 
 // Save the new book in the books collection
   newPlant.save(function(err, doc) {
@@ -102,7 +102,7 @@ app.post('/submit', function(req, res) {
 // This GET route let's us see the plants we have added
 app.get('/plants', function(req, res) {
   // using our Plants model, "find" every plant in our plants db
-  Plants.find({}, function(err, doc) {
+  YourPlants.find({}, function(err, doc) {
     // send any errors to the browser
 
     if (err) {

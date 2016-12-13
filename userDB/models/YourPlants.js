@@ -26,7 +26,8 @@ var PlantSchema = new Schema({
 // Our Library model will have an array to store these ids.
 
 // create the Book model with the BookSchema
-var Plants = mongoose.model('Plants', PlantSchema);
+var YourPlants = mongoose.model('YourPlants', PlantSchema);
 
 // export the model so we can use it on our server file.
-module.exports = Plants;
+module.exports = YourPlants;
+
