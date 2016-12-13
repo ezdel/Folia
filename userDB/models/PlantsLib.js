@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   name: {
     type:String,
-    // unique:true
+    unique:true
   },
   yourPlants: [{
       type: Schema.Types.ObjectId,
