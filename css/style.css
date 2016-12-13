@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* TYPOGRAPHY
+____________________________________*/
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+}
+
+#current-weather {
+  font-weight: 700;
+  font-size: 108px;
+}
+
+#weather-description {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+#greeting {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+#plants-update {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+hr {
+  color: #000;
+  background-color: #000;
+  height: 1px;
+  margin: 24px 0 24px 0;
+}
+
+#add-plant-text {
+  text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+/* HERO CONTAINER
+____________________________________*/
+
+#hero-image {
+  min-height: 568px;
+  width: auto;
+  background: url(../images/Folia-Background-1.png);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#logo {
+  width: 142px;
+  margin: 32px 0 0 32px;
+}
+
+#dashboard-container {
+  background-color: #fffdef;
+  width: 520px;
+  height: 288px;
+  margin: 0 auto;
+  position: relative;
+  top: 197px;
+}
+
+#weather-dashboard {
+  display: inline-block;
+  padding-right: 48px;
+  margin: 48px 0 0 48px;
+  border-right: 2px solid #000;
+}
+
+#plant-dashboard {
+  display: inline-block;
+  width: 172px;
+  margin: 48px 0 0 40px;
+}
+
+#greeting {
+  border-bottom: 2px solid #000;
+  padding-bottom: 16px;
+  margin: 0 0 16px 0;
+}
+
+/* SECONDARY CONTAINER
+____________________________________*/
+
+#secondary-container {
+  background-color: #e3e0d2;
+}
+
+/* STANDARD PLANT CARD
+____________________________________*/
+
+.plant-image {
+  width: 246px;
+  height: 162px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* BUTTONS
+____________________________________*/
+
+.add-plant-button {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background: #84bd32;
+  margin: 0 auto;
+}
+
+.add-plant {
+  display: block;
+  float: left;
+  width: 100%;
+  padding-top: 50%;
+  padding-bottom: 50%;
+  line-height: 1em;
+  margin-top: -0.5em;
+  text-align: center;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+/* CARDS
+____________________________________*/
+
+.card {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  border-radius: 2px;
+  display: inline-block;
+  height: 300px;
+  margin: 1rem;
+  position: relative;
+  width: 246px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
+
+#add-plant-card {
+  padding: 72px 48px 0 48px;
+}
