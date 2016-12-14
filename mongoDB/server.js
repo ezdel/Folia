@@ -3,6 +3,11 @@ var routes = require('./routes/search.js');
 var mongoose = require('mongoose');
 var path    = require("path");
 var bodyParser = require('body-parser');
+var ReactStormpath = require('react-stormpath').default;
+var Router = require('react-stormpath').Router;
+var AuthenticatedRoute = require('react-stormpath').AuthenticatedRoute;
+var LoginLink = require('react-stormpath').LoginLink;
+
 
 var app = express();
 app.use(bodyParser.json());
