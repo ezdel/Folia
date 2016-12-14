@@ -1,5 +1,5 @@
 {
-  "name": "Folia",
+  "name": "plants_app",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,15 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ezdel/Folia.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ezdel/Folia/issues"
-  },
-  "homepage": "https://github.com/ezdel/Folia#readme"
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "mongojs": "^2.3.0",
+    "mongoose": "^4.4.6",
+    "path": "^0.12.7"
+  }
 }
