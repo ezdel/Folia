@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en" ng-app="folio">
+  <head>
+    <meta charset="utf-8">
+    <title>Folia</title>
 
-<html>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Folia</title>
-
-  <!-- GOOGLE FONTS -->
+    <!-- GOOGLE FONTS -->
 
   <link href="https://fonts.googleapis.com/css?family=PT+Serif:700|Roboto:300i,400,700" rel="stylesheet">
 
@@ -16,20 +15,18 @@
 
   <!-- EXTERNAL CSS  -->
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 
+  </head>
+  <body>
 
-</head>
-
-<body>
-
-  <!-- FULL-WIDTH HERO IMAGE -->
+    <!-- FULL-WIDTH HERO IMAGE -->
 
   <div id="hero-image">
 
     <!-- FOLIA LOGO -->
 
-    <img id="logo" src="images/folia-logo.png" alt="folia-logo">
+    <img id="logo" src="../images/folia-logo.png" alt="folia-logo">
 
     <!-- DASHBOARD WITH CURRENT WEATHER AND PLANT INFORMATION -->
 
@@ -52,13 +49,22 @@
 
   <!-- SECONDARY CONTAINER FOR LOGIN, PLANT DATABASE, AND ADD PLANT -->
 
-  <section id="secondary-container">
+  <section id="secondary-container" ng-controller="inputPlant">
   	
 	<!-- ADD PLANT CARD -->
+	<div id="plant-search" ng-show="show-search" ng-class="ng-hide">
+		<input ng-model="item.value" />
+    	<button ng-click="getValue(item)">Enter Plant Type</button>
+    </div>
 
 	<div id="add-plant-card" class="card">
 
 	  <div class="add-plant-button">
+
+        <div class="addcontend">
+            <div ng-click="show-search = !show-search">
+            </div>
+        </div>
 	    <p class="add-plant">+</p>
 	  </div>
 
@@ -67,7 +73,8 @@
 	  <p id="add-plant-text">Add Plant to Collection</p>
 
 	</div>
-  <div id="button"></div>
+
+	
 
 	<!-- STANDARD PLANT CARD -->
 
@@ -100,5 +107,9 @@
 
   <footer></footer>
 
-</body>
+  </body>
+  <!-- ANGULAR -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
 </html>
+
