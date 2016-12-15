@@ -11,7 +11,7 @@ var UserSchema = new Schema({
   },
   yourPlants: [{
       type: Schema.Types.ObjectId,
-      ref: 'Plants'
+      ref: 'yourplants'
   }]
 });
 
