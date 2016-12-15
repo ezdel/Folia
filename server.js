@@ -206,7 +206,7 @@ app.post('/search', function(req, res) {
                         if (err) {
                             res.send(err);
                         } else {
-                            res.send(doc);
+                            console.log('Go forth');
                         }
                     });
                     console.log(doc);
