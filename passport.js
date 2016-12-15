@@ -1,59 +1,54 @@
 var express = require('express');
 var app = express();
 var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var	GoogleStrategy 	= require('passport-google-oauth').OAuth2Strategy;
 
 passport.use(new GoogleStrategy({
-        clientID: '920662394808-v0gklb4utmgaimr7bpufaq9jq7gl04sq.apps.googleusercontent.com',
-        clientSecret: '9ZJQT1sboO_WI6OWAyENQTjH',
-        callbackURL: 'http://localhost:3000/auth/google/callback'
-    },
-    function(token, tokenSecret, profile, done) {
-        // placeholder for translating profile into your own custom user object.
-        // for now we will just use the profile object returned by GitHub
-        return done(null, profile);
-    }
+	  clientID: '920662394808-v0gklb4utmgaimr7bpufaq9jq7gl04sq.apps.googleusercontent.com',
+	  clientSecret: '9ZJQT1sboO_WI6OWAyENQTjH',
+	  callbackURL: 'http://localhost:3000/auth/google/callback'
+  },
+  function (token, tokenSecret, profile, done) {
+    // placeholder for translating profile into your own custom user object.
+    // for now we will just use the profile object returned by GitHub
+    return done(null, profile);
+  }
 ));
-
-var userName;
-var userID;
-var userData;
 
 // Express and Passport Session
 var session = require('express-session');
 // app.use(session({secret: "enter custom sessions secret here"}));
-app.use(session({ secret: "secret" }));
+app.use(session({secret: "secret"}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-    // placeholder for custom user serialization
-    // null is for errors
-    done(null, user);
+  // placeholder for custom user serialization
+  // null is for errors
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-    // placeholder for custom user deserialization.
-    // maybe you are getoing to get the user from mongo by id?
-    // null is for errors
-    done(null, user);
+  // placeholder for custom user deserialization.
+  // maybe you are getoing to get the user from mongo by id?
+  // null is for errors
+  done(null, user);
 });
 
 // we will call this to start the Google Login process
-app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
+app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
 
 // Google will call this URL
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
-    function(req, res) {
-        console.log("Google Callback");
-        console.log(req.isAuthenticated());
-        res.redirect('/');
-    });
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+    console.log("Google Callback");
+    console.log(req.isAuthenticated());
+    res.redirect('/');
+  });
 
-app.get('/', function(req, res) {
-
-    var html = "<ul>\
+app.get('/', function (req, res) {
+  var html = "<ul>\
     <li><a href='/auth/google'>Google</a></li>\
     <li><a href='/'></a></li>\
     <li><a href='/protected'>Check For Login</a></li>\
@@ -61,36 +56,23 @@ app.get('/', function(req, res) {
     <li><a href='/logout'>logout</a></li>\
   </ul>";
 
-    // dump the user for debugging
-    if (req.isAuthenticated()) {
-        html += "<p>User is LOGGED IN as user:</p>"
-        html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+  // dump the user for debugging
+  if (req.isAuthenticated()) {
+    html += "<p>User is LOGGED IN as user:</p>"
+    html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+  } else {
+    html += "<p> User is NOT LOGGED IN. </p>"
+    html += "</p>"
+    html += "</p>"
+  }
 
-        userID = req.user.id;
-        userName = req.user.displayName
-        console.log("id: " + userID + " name: " + req.user.displayName)
-
-        var userData = {
-            'name': userName,
-            'userid': userID
-        }
-        console.log('user data line 75' + userData);
-
-        return userData;
-
-    } else {
-        html += "<p> User is NOT LOGGED IN. </p>";
-        html += "</p>";
-        html += "</p>";
-    }
-
-    res.send(html);
+  res.send(html);
 });
 
-app.get('/logout', function(req, res) {
-    console.log('logging out');
-    req.logout();
-    res.redirect('/');
+app.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/');
 });
 
 // Simple route middleware to ensure user is authenticated.
@@ -99,9 +81,8 @@ app.get('/logout', function(req, res) {
 //  the request will proceed.  Otherwise, the user will be redirected to the
 //  login page.
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next(); }
-    res.redirect('/')
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')
 }
 
 app.get('/protected', ensureAuthenticated, function(req, res) {
@@ -113,27 +94,19 @@ app.get('/protected', ensureAuthenticated, function(req, res) {
       <li><a href='/logout'>logout</a></li>\
     </ul>";
     // dump the user for debugging
-    if (req.isAuthenticated()) {
-        html += "<p>User is LOGGED IN as user:</p>"
-        html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
-        console.log("id: " + req.user.id + " name: " + req.user.displayName)
-
-    } else {
-        html += "<p> User is NOT LOGGED IN. </p>"
-        html += "</p>"
-        html += "</p>"
-    }
+  if (req.isAuthenticated()) {
+    html += "<p>User is LOGGED IN as user:</p>"
+    html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+  } else {
+    html += "<p> User is NOT LOGGED IN. </p>"
+    html += "</p>"
+    html += "</p>"
+  }
     res.send(html);
 });
 
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
-    console.log('Amazing things happening on port ' + server.address().port);
+  console.log('Amazing things happening on port ' + server.address().port);
 });
-
-
-
-// console.log("user data line 136" + userData);
-
-module.exports = userData;
