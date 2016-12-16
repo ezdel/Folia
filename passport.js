@@ -3,6 +3,9 @@ var app = express();
 var passport = require('passport');
 var	GoogleStrategy 	= require('passport-google-oauth').OAuth2Strategy;
 
+var login = require('./models/Login.js');
+passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'});
+
 passport.use(new GoogleStrategy({
 	  clientID: '920662394808-v0gklb4utmgaimr7bpufaq9jq7gl04sq.apps.googleusercontent.com',
 	  clientSecret: '9ZJQT1sboO_WI6OWAyENQTjH',
@@ -11,6 +14,28 @@ passport.use(new GoogleStrategy({
   function (token, tokenSecret, profile, done) {
     // placeholder for translating profile into your own custom user object.
     // for now we will just use the profile object returned by GitHub
+    process.nextTick(function(){
+      Login.findOne({'google.id': profile.id}, function(err, user){
+        if(err) {
+          return err;
+        } else if (user) {
+          return done(null, profile);
+        } else {
+          var newLogin = new Login();
+          newLogin.google.id = profile.id;
+          newLogin.google.token = token;
+          newLogin.google.name = profile.displayName;
+          newLogin.google.email = profile.emails[0].value;
+
+          newLogin.save(function(err) {
+            if(err){
+              return err;
+            }
+            console.log(profile);
+          })
+        }
+      })
+    })
     return done(null, profile);
   }
 ));
@@ -47,7 +72,7 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
-app.get('/', function (req, res) {
+app.get('/login', function (req, res) {
   var html = "<ul>\
     <li><a href='/auth/google'>Google</a></li>\
     <li><a href='/'></a></li>\

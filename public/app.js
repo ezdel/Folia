@@ -12,3 +12,17 @@ $("#searchButton").on('click', function() {
 	})
 	return false;
 });
+
+
+$("#loginButton").on('click', function() {
+	$.ajax({
+		type: "POST",
+		dataType: "string",
+		url: "/login",
+		data: {"someData": searchVal},
+		success: function(response) {			
+			
+		}
+	})
+	return false;
+});

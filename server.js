@@ -64,6 +64,9 @@ app.get('/', function(req, res) {
         sendFile(path.join(__dirname + '/public/index.html'));
     }
 });
+// AUTHENTICATION
+app.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+app.get('/google', passport.authenticate('google', {successRedirect: 'www.google.com', failureRedirect: 'www.reddit.com'}));
 
 app.post('/submit', function(req, res) {
 
