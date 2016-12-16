@@ -38,10 +38,12 @@ var soilConditon;
 var waterCondition;
 var shadeCondition;
 
+// grab the plant name from the card   class = plant-name
+var thisPlant = 'Swamp Onion'
+
 // max pts for total algorithm:
 
 var waterScore = 0;
-
 
 var express = require('express');
 var routes = require('./routes/search.js');
@@ -79,7 +81,7 @@ db.once('open', function() {
 
 app.get('/all', function(req, res) {
   // Query: In our database, go to the yourplants collection, then "find" everything 
-  db.yourplants.find({plantName: "Spike Lavender"}, function(err, found) {
+  db.plants.find({commonName: thisPlant}, function(err, found) {
     // log any errors if the server encounters one
     if (err) {
       console.log(err);
@@ -198,7 +200,6 @@ calculateSeason();
 
   });
 });
-// evaluateScore();
 console.log('waterscore: ' + waterScore);
 
 app.listen(3000, function() {
