@@ -33,9 +33,65 @@
 // 	N (no shade): 16
 // 	FSN (all the shades): 10
 
+// variables:
+var soilConditon;
+var waterCondition;
+var shadeCondition;
+
 // max pts for total algorithm:
 
 var waterScore = 0;
+
+
+var express = require('express');
+var routes = require('./routes/search.js');
+var mongoose = require('mongoose');
+var path = require("path");
+var bodyParser = require('body-parser');
+
+var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// require mongojs and connect to my db
+var mongojs = require('mongojs');
+var databaseUrl = "plantDB";
+var collections = ["plants", "userlibraries", "yourplants"];
+
+// save mongojs to the db variable
+var db = mongojs(databaseUrl, collections);
+
+// specifies the location of static files
+app.use(express.static('public'));
+
+// start a mongoose connection
+mongoose.connect('mongodb://localhost/plantDB');
+
+// show any mongoose errors
+db.on('error', function(err) {
+    console.log('Mongoose has an error: ', err);
+});
+
+// once logged in to the db through mongoose, log a success message
+db.once('open', function() {
+    console.log('Mongoose connection successful.');
+});
+
+app.get('/all', function(req, res) {
+  // Query: In our database, go to the yourplants collection, then "find" everything 
+  db.yourplants.find({plantName: "Spike Lavender"}, function(err, found) {
+    // log any errors if the server encounters one
+    if (err) {
+      console.log(err);
+    } 
+    // otherwise, send the result of this query to the browser
+    else {
+      res.json(found[0].moisture);
+
+      var waterCondition = found[0].moisture;
+      var shadeCondition = found[0].shade;
+      var soilConditon = found[0].soil;
+    }
 
 // calculate the season
 var calculateSeason = function() {
@@ -44,7 +100,6 @@ var calculateSeason = function() {
     if (0 <= currentMonth <= 2 || currentMonth === 11) {
         console.log('winter');
         waterScore += 5;
-        console.log(waterScore);
     } else if (3 <= currentMonth <= 4) {
         waterScore += 10;
     } else if (5 <= currentMonth <= 7) {
@@ -57,7 +112,7 @@ var calculateSeason = function() {
 };
 
 // calculate the soil thang
-var soilConditon = 'LMH'
+
 
 var caclulateSoil = function() {
      
@@ -68,7 +123,6 @@ var caclulateSoil = function() {
             waterScore += 9;
         } else if (soilConditon === 'LMH') {
             waterScore += 7;
-            console.log(waterScore + 'soil')
         } else if (soilConditon === 'M') {
             waterScore += 5;
         } else if (soilConditon === 'MH') {
@@ -79,7 +133,6 @@ var caclulateSoil = function() {
     }
     // calculate the watering requirements 
 
-var waterCondition = 'M'
 
 var calculateWater = function() {
         if (waterCondition === 'D') {
@@ -88,7 +141,6 @@ var calculateWater = function() {
             waterScore += 10;
         } else if (waterCondition === 'M') {
             waterScore += 30;
-            console.log(waterScore + ' water')
         } else if (waterCondition === 'MWe') {
             waterScore += 30;
         } else if (waterCondition === 'We') {
@@ -103,7 +155,6 @@ var calculateWater = function() {
     }
     // calculate shade requirements 
 
-var shadeCondition = 'SN'
 
 var calculateShade = function() {
     if (shadeCondition === 'FS') {
@@ -114,7 +165,6 @@ var calculateShade = function() {
         waterScore += 13;
     } else if (shadeCondition === 'N') {
         waterScore += 16;
-        console.log(waterScore + 'shade')
     } else if (shadeCondition === 'FSN') {
         waterScore += 10;
 
@@ -145,5 +195,12 @@ var evaluateScore = function() {
 
 
 calculateSeason();
+
+  });
+});
 // evaluateScore();
 console.log('waterscore: ' + waterScore);
+
+app.listen(3000, function() {
+  console.log('App running on port 3000!');
+});

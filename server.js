@@ -39,7 +39,7 @@ var YourPlants = require('./models/YourPlants.js');
 var UserLibrary = require('./models/UserLibrary.js');
 
 var exampleLibrary = new UserLibrary({
-    name: "Plants Library"
+    name: "User Plant Library"
 });
 
 var useLibrary = exampleLibrary.name;
