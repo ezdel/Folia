@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="folio">
+<html lang="en" ng-app="folia">
   <head>
     <meta charset="utf-8">
     <title>Folia</title>
@@ -16,6 +16,10 @@
   <!-- EXTERNAL CSS  -->
 
   <link rel="stylesheet" href="../css/style.css">
+
+<!-- ANGULAR -->
+  <!-- <script src="controllers/inputPlant.controller.js"</script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
 
   </head>
   <body>
@@ -49,23 +53,14 @@
 
   <!-- SECONDARY CONTAINER FOR LOGIN, PLANT DATABASE, AND ADD PLANT -->
 
-  <section id="secondary-container" ng-controller="inputPlant">
+  <section id="secondary-container">
   	
 	<!-- ADD PLANT CARD -->
-	<div id="plant-search" ng-show="show-search" ng-class="ng-hide">
-		<input ng-model="item.value" />
-    	<button ng-click="getValue(item)">Enter Plant Type</button>
-    </div>
 
-	<div id="add-plant-card" class="card">
-
+	<div id="add-plant-card" class="card" ng-controller="InputPlantController">
+		<input type="text" placeholder="Enter Plant Type" ng-show="searchShown"></input>
 	  <div class="add-plant-button">
-
-        <div class="addcontend">
-            <div ng-click="show-search = !show-search">
-            </div>
-        </div>
-	    <p class="add-plant">+</p>
+	    <p class="add-plant" ng-click="searchShown = !searchShown">+</p>
 	  </div>
 
 
@@ -108,8 +103,20 @@
   <footer></footer>
 
   </body>
-  <!-- ANGULAR -->
+  <script type="text/javascript">
+  	
+  	var app = angular.module('folia', []);
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+	app.controller('InputPlantController', function ($scope	) {
+    	$scope.searchShown = false;
+    	$scope.inputs = [];
+    	$scope.addfield = function () {
+        $scope.inputs.push({})
+    	}
+    	$scope.getValue = function (item) {
+     	   alert(item.value)
+    	}
+	});
+  </script>
 </html>
 
