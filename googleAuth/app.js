@@ -12,7 +12,7 @@ var users = require('./routes/users');
 var auth = require('./routes/auth');
 
 var app = express();
-var googleStrategy = require('passport-google-oath').OAuth2Strategy;
+var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // Plug the strategy into passport in order to use is
 passport.use(new googleStrategy({
