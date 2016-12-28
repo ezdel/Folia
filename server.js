@@ -72,7 +72,7 @@ app.post('/submit', function(req, res) {
 
     var newPlant = new YourPlants(req.body);
 
-    // Save the new book in the books collection
+    // Save the new plant in the collection
     newPlant.save(function(err, doc) {
         // send an error to the browser if there's something wrong
         if (err) {
