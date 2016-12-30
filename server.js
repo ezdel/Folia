@@ -1,8 +1,10 @@
 var express = require('express');
-var routes = require('./routes/search.js');
+var login = require('./routes/login.js');
 var mongoose = require('mongoose');
 var path = require("path");
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var app = express();
 app.use(bodyParser.json());
@@ -65,8 +67,16 @@ app.get('/', function(req, res) {
     }
 });
 // AUTHENTICATION
-app.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-app.get('/google', passport.authenticate('google', {successRedirect: 'www.google.com', failureRedirect: 'www.reddit.com'}));
+passport.use(new googleStrategy({
+  clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
+  clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
+  callbackURL: 'http://localhost:3000/auth/google/callback'},
+  function(req, accessToken, refreshToken, profile, done){
+    done(null, profile);
+  }
+));
+
+app.use('/google', login);
 
 app.post('/submit', function(req, res) {
 

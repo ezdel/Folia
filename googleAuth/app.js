@@ -56,7 +56,7 @@ app.use(session({secret: 'anything'}))
 // Pull in your routes
 app.use('/', routes);
 app.use('/users', users);
-app.use('/auth', auth)
+app.use('/auth', auth);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
