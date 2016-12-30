@@ -10,6 +10,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Pull in Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // require mongojs and connect to my db
 var mongojs = require('mongojs');
 var databaseUrl = "plantDB";
@@ -77,6 +81,11 @@ passport.use(new googleStrategy({
 ));
 
 app.use('/google', login);
+
+// Starting to render the frontend html
+app.get('/google', function(req, res) {
+    res.sendFile(path.join(__dirname+'/index.html'));
+})
 
 app.post('/submit', function(req, res) {
 
