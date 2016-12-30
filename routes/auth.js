@@ -4,9 +4,10 @@ var router = express.Router();
 
 router.route('/google/callback')
 	.get(passport.authenticate('google', {
-		successRedirect: '/google',
+		successRedirect: '/users/',
 		failure: '/error/'
 	}));
+
 
 router.route('/google')
 	.get(passport.authenticate('google', {
@@ -15,6 +16,3 @@ router.route('/google')
 }));
 
 module.exports = router;
-
-// app.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-// app.get('/google', passport.authenticate('google', {successRedirect: 'www.google.com', failureRedirect: 'www.reddit.com'}));

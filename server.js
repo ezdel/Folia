@@ -1,9 +1,12 @@
 var express = require('express');
-var login = require('./routes/login.js');
+var auth = require('./routes/auth');
+var users = require('./routes/users');
+
 var mongoose = require('mongoose');
 var path = require("path");
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var session = require('express-session');
 var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var app = express();
@@ -13,6 +16,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Pull in Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Pull in serialize user. This puts the user object in the session
+passport.serializeUser(function(user, done){
+  done(null, user)
+});
+
+// Passport removes the user out of the session using deserializeuser
+passport.deserializeUser(function(user, done){
+  done(null, user);
+});
+
+// Pull in Express session
+app.use(session({secret: 'anything'}))
 
 // require mongojs and connect to my db
 var mongojs = require('mongojs');
@@ -70,7 +86,9 @@ app.get('/', function(req, res) {
         sendFile(path.join(__dirname + '/public/index.html'));
     }
 });
+
 // AUTHENTICATION
+
 passport.use(new googleStrategy({
   clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
   clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
@@ -80,12 +98,26 @@ passport.use(new googleStrategy({
   }
 ));
 
-app.use('/google', login);
+// This adds a user to the DB with the Google ID
+// passport.use(new googleStrategy({
+//   clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
+//   clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
+//   callbackURL: 'http://localhost:3000/auth/google/callback'},
+//   function(accessToken, refreshToken, profile, done){
+//     UserLibrary.findOrCreate({ googleId: profile.id }, function(err, user) {
+//         return done(err, user);
+//         console.log(UserLibrary);
+//     });
+//   }
+// ));
+
+app.use('/auth', auth);
+
 
 // Starting to render the frontend html
-app.get('/google', function(req, res) {
-    res.sendFile(path.join(__dirname+'/index.html'));
-})
+// app.get('/google', function(req, res) {
+//     res.sendFile(path.join(__dirname+'/index.html'));
+// });
 
 app.post('/submit', function(req, res) {
 
@@ -241,6 +273,8 @@ app.post('/search', function(req, res) {
 
     });
 });
+
+module.exports = app;
 
 // specify my port
 app.listen(3000, function() {
