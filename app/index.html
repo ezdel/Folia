@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="../css/style.css">
 
 <!-- ANGULAR -->
-  <!-- <script src="controllers/inputPlant.controller.js"</script> -->
+  <script src="controllers/inputPlant.controller.js"</script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
 
   </head>
@@ -58,7 +58,7 @@
 	<!-- ADD PLANT CARD -->
 
 	<div id="add-plant-card" class="card" ng-controller="InputPlantController">
-		<input type="text" placeholder="Enter Plant Type" ng-show="searchShown"></input>
+		<input id="enter-plant" type="text" placeholder="Enter Plant Type" ng-show="searchShown"></input>
 	  <div class="add-plant-button">
 	    <p class="add-plant" ng-click="searchShown = !searchShown">+</p>
 	  </div>
@@ -73,19 +73,19 @@
 
 	<!-- STANDARD PLANT CARD -->
 
-	<!-- <div id="plant-card" class="card">
+	<div id="plant-card" class="card">
 
-	  <img class="plant-image" src="images/plant-placeholder.jpg" alt="plant image"> -->
+	  <img class="plant-image" src="images/plant-placeholder.jpg" alt="plant image">
 
 	  <!-- BUTTON TO SET WATERING -->
 
-	  <!-- <div class="water-button">
+	  <div class="water-button">
 	    <img class="water-icon" src="images/water-icon.png">
-	  </div> -->
+	  </div>
 
 	  <!-- PLANT INFORMATION -->
 
-	  <!-- <p class="plant-name">Peace Lily</p>
+	  <p class="plant-name">Peace Lily</p>
 	  <p class="scientific-name">Chlorogalum pomeridianum</p>
 	  <hr>
 	    <div class="soil-rating">
@@ -93,7 +93,7 @@
 	      <img class="soil-icon" src="images/soil-icon.png">
 	    </div>
 
-    </div> -->
+    </div>
 
 
   </section>
@@ -105,7 +105,7 @@
   </body>
   <script type="text/javascript">
   	
-  	var app = angular.module('folia', []);
+  var app = angular.module('folia', []);
 
 	app.controller('InputPlantController', function ($scope	) {
     	$scope.searchShown = false;

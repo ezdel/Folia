@@ -1,7 +1,7 @@
 var app = angular.module('folia', []);
 
 app.controller('InputPlantController', function ($scope) {
-    $scope.searchShown = false;
+    //$scope.searchShown = false;
     // $scope.inputs = [];
     // $scope.addfield = function () {
     //     $scope.inputs.push({})
