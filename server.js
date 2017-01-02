@@ -7,28 +7,16 @@ var path = require("path");
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
-var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Pull in Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Pull in serialize user. This puts the user object in the session
-passport.serializeUser(function(user, done){
-  done(null, user)
-});
-
-// Passport removes the user out of the session using deserializeuser
-passport.deserializeUser(function(user, done){
-  done(null, user);
-});
 
 // Pull in Express session
 app.use(session({secret: 'anything'}))
+
+require('./config/passport')(app);
 
 // require mongojs and connect to my db
 var mongojs = require('mongojs');
@@ -87,30 +75,6 @@ app.get('/', function(req, res) {
     }
 });
 
-// AUTHENTICATION
-
-passport.use(new googleStrategy({
-  clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
-  clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
-  callbackURL: 'http://localhost:3000/auth/google/callback'},
-  function(req, accessToken, refreshToken, profile, done){
-    done(null, profile);
-  }
-));
-
-// This adds a user to the DB with the Google ID
-// passport.use(new googleStrategy({
-//   clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
-//   clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
-//   callbackURL: 'http://localhost:3000/auth/google/callback'},
-//   function(accessToken, refreshToken, profile, done){
-//     UserLibrary.findOrCreate({ googleId: profile.id }, function(err, user) {
-//         return done(err, user);
-//         console.log(UserLibrary);
-//     });
-//   }
-// ));
-
 app.use('/auth', auth);
 
 
@@ -120,9 +84,7 @@ app.use('/auth', auth);
 // });
 
 app.post('/submit', function(req, res) {
-
     var newPlant = new YourPlants(req.body);
-
     // Save the new plant in the collection
     newPlant.save(function(err, doc) {
         // send an error to the browser if there's something wrong
@@ -131,7 +93,6 @@ app.post('/submit', function(req, res) {
         }
         // otherwise...
         else {
-
             UserLibrary.findOneAndUpdate({ 'name': useLibrary }, { $push: { 'yourPlants': doc._id } }, { new: true }, function(err, doc) {
                 // send any errors to the browser
                 if (err) {
