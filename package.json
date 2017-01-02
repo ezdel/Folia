@@ -13,8 +13,11 @@
     "angular": "^1.6.0",
     "body-parser": "^1.15.2",
     "express": "^4.13.4",
+    "express-session": "^1.14.2",
     "mongojs": "^2.3.0",
     "mongoose": "^4.4.6",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7"
   }
 }
