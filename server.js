@@ -1,32 +1,33 @@
+// ALl of my NPM dependencies
 var express = require('express');
-var auth = require('./routes/auth');
-var users = require('./routes/users');
-
 var mongoose = require('mongoose');
 var path = require("path");
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var mongojs = require('mongojs');
+
+// All of my file dependencies
+var auth = require('./routes/auth');
+var users = require('./routes/users');
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 // Pull in Express session
 app.use(session({secret: 'anything'}))
 
 require('./config/passport')(app);
 
-// require mongojs and connect to my db
-var mongojs = require('mongojs');
+// Connect to my db using mongojs
 var databaseUrl = "plantDB";
 var collections = ["plants", "UserLibrary", "YourPlants"];
 
-// save mongojs to the db variable
+// Save mongojs to the db variable
 var db = mongojs(databaseUrl, collections);
 
-// specifies the location of static files
+// Specify the location of static files
 app.use(express.static('public'));
 
 // start a mongoose connection
@@ -42,8 +43,7 @@ db.once('open', function() {
     console.log('Mongoose connection successful.');
 });
 
-
-// ***** RETURN LATER ******
+// ***** COME BACK TO THIS ******
 // Bring in our Models: User & Plants
 var YourPlants = require('./models/YourPlants.js');
 var UserLibrary = require('./models/UserLibrary.js');
@@ -65,18 +65,17 @@ exampleLibrary.save(function(err, doc) {
     }
 });
 
-
-// at '/', render my index.html file if ther eis no error
+// At root, render my index.html file if ther eis no error
 app.get('/', function(req, res) {
     if (err) {
-        console.log(err);
+        console.log('This is where it breaks');
     } else {
         sendFile(path.join(__dirname + '/public/index.html'));
     }
 });
 
 app.use('/auth', auth);
-
+app.use('/users', users);
 
 // Starting to render the frontend html
 // app.get('/google', function(req, res) {
@@ -156,7 +155,6 @@ app.get('/populated', function(req, res) {
         });
 });
 
-
 // at '/db', render the result of my query if there is no error
 app.get('/db', function(req, res) {
     // res.send(db.plants.find({}).limit(2));
@@ -167,7 +165,6 @@ app.get('/db', function(req, res) {
             res.json(query);
         }
     });
-
 });
 
 app.post('/db', function(req, res) {

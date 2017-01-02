@@ -12,17 +12,6 @@ var users = require('./routes/users');
 var auth = require('./routes/auth');
 
 var app = express();
-var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-// Plug the strategy into passport in order to use is
-passport.use(new googleStrategy({
-  clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
-  clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
-  callbackURL: 'http://localhost:3000/auth/google/callback'},
-  function(req, accessToken, refreshToken, profile, done){
-    done(null, profile);
-  }
-));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,22 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Pull in Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Pull in serialize user. This puts the user object in the session
-passport.serializeUser(function(user, done){
-  done(null, user)
-});
-
-// Passport removes the user out of the session using deserializeuser
-passport.deserializeUser(function(user, done){
-  done(null, user);
-});
-
 // Pull in Express session
 app.use(session({secret: 'anything'}))
+
+require('./config/passport')(app);
 
 // Pull in your routes
 app.use('/', routes);
