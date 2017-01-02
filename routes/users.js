@@ -6,7 +6,8 @@ router.use('/', function(req, res, next){
 	if(!req.user){
 		res.redirect('../');
 	} else {
-		console.log("Redirect to my home page");
+		res.redirect('../');
+		console.log("I'm logged in. Go to my home page");
 	}
 });
 
