@@ -46,7 +46,7 @@ var thisPlant = 'Swamp Onion'
 var waterScore = 0;
 
 var express = require('express');
-var routes = require('./routes/search.js');
+// var routes = require('./routes/search.js');
 var mongoose = require('mongoose');
 var path = require("path");
 var bodyParser = require('body-parser');

@@ -5,7 +5,7 @@ router.use('/', function(req, res, next){
 	if(!req.user){
 		res.redirect('/');
 	} else {
-		console.log(err);
+		next();
 	}
 });
 

@@ -16,9 +16,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Pull in Express session
-app.use(session({secret: 'anything'}))
+app.use(session({secret: 'anything'}));
 
+// Pull in the function from my Passport file
 require('./config/passport')(app);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Connect to my db using mongojs
 var databaseUrl = "plantDB";

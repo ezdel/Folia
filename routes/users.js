@@ -1,21 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-// Make sure user is signed in or order to view plants
+// If user is not logged in, then go to login screen, else go to their page
 router.use('/', function(req, res, next){
 	if(!req.user){
-		res.redirect('../');
+		res.redirect('/');
 	} else {
-		res.redirect('../');
-		console.log("I'm logged in. Go to my home page");
+		next();
 	}
+
 });
 
 /* GET users listing. */
 router.get('/', function(req, res) {
   res.render('users', {user: 
-  						{name: req.session.passport.user.displayName,
-  						id: req.session.passport.user.id}});
+  						{name: req.user.displayName,
+  						id: req.user.id}});
 });
 
 module.exports = router;
