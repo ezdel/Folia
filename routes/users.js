@@ -8,7 +8,6 @@ router.use('/', function(req, res, next){
 	} else {
 		next();
 	}
-
 });
 
 /* GET users listing. */
