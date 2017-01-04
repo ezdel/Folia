@@ -1,4 +1,6 @@
-var app = angular.module('folia', []);
+angular.
+	module('folia').
+	controller: function
 
 app.controller('InputPlantController', function ($scope) {
     //$scope.searchShown = false;
