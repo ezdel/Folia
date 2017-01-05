@@ -1,1 +1,0 @@
-var searchForm = angular.module('searchForm', []);
