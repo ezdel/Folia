@@ -1,5 +1,7 @@
 angular.module('folia').
 component('searchPlant', {
+	template: 
+	
 	controller: function InputPlantController ($scope) {
     	$scope.searchShown = false;
     	$scope.inputs = [];
