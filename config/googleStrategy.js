@@ -12,7 +12,7 @@ module.exports = function(){
 	  	// Create a new google profile object
 	  	var googleProfile = {};
 	  	// The object will contain the ID and name
-	  	YourPlants.googleProfile.id = req.user.displayName;
+	  	YourPlants.googleProfile.id = req.user.id;
 	  	YourPlants.googleProfile.token = accessToken;
 
 	    done(null, YourPlants);
