@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body ng-app="folia">
 
   <!-- FULL-WIDTH HERO IMAGE -->
 
@@ -56,18 +56,17 @@
   	
 	<!-- ADD PLANT CARD -->
 
-	<div id="add-plant-card" class="card">
+	<div id="add-plant-card" class="card" ng-controller="InputPlantController">
+    <input id="enter-plant" type="text" placeholder="Enter Plant Type" ng-show="searchShown"></input>
+    <div class="add-plant-button">
+      <p class="add-plant" ng-click="searchShown = !searchShown">+</p>
+    </div>
 
-	  <div class="add-plant-button">
-	    <p class="add-plant">+</p>
-	  </div>
 
+    <hr>
+    <p id="add-plant-text">Add Plant to Collection</p>
 
-	  <hr>
-	  <p id="add-plant-text">Add Plant to Collection</p>
-
-	</div>
-  <div id="button"></div>
+  </div>
 
 	<!-- STANDARD PLANT CARD -->
 
@@ -111,4 +110,9 @@
   <footer></footer>
 
 </body>
+
+<!-- ANGULAR -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
+  <script src="app/app.module.js"></script>
+  <script src="app/search-plant/search-plant.component.js"</script>
 </html>

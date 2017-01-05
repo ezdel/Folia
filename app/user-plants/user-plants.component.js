@@ -1,4 +1,4 @@
-angular.module('plant', [])
+angular.module('folia', [])
   .controller('PlantController', function() {
     
   });
