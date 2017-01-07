@@ -6,6 +6,7 @@ folia.controller('InputPlantController', function($scope){
    		$scope.addfield = function () {
    	    	$scope.inputs.push({})
     	}
+    	console.log($scope.inputs);
     	$scope.getValue = function (item) {
         	alert(item.value)
     	}

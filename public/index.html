@@ -1,21 +1,139 @@
-
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-	<title>Plants Form</title>
-	<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Folia</title>
+
+  <!-- GOOGLE FONTS -->
+
+  <link href="https://fonts.googleapis.com/css?family=PT+Serif:700|Roboto:300i,400,700" rel="stylesheet">
+
+  <!-- CSS NORMALIZE -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <!-- EXTERNAL CSS  -->
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+
 </head>
-<body>
-<form>
-	<input type="text" name="search" size="20" id="searchForm">
-	<input type="submit" value="SEARCH" id="searchButton">
-</form>
 
-	<a href="/auth/google">
-		<input type="submit" value="LOGIN WITH GOOGLE" id="loginButton">
-	</a>
+<body ng-app="folia">
 
-<script src="app.js"></script>
+  <!-- FULL-WIDTH HERO IMAGE -->
+
+  <div id="hero-image">
+
+    <!-- FOLIA LOGO -->
+
+    <img id="logo" src="../images/folia-logo.png" alt="folia-logo">
+
+    <!-- DASHBOARD WITH CURRENT WEATHER AND PLANT INFORMATION -->
+
+    <div id="dashboard-container">
+
+      <section id="weather-dashboard">
+        <h4>CURRENT WEATHER</h4>
+        <p id="current-weather">72&#176;</h2>
+        <p id="weather-description">Clear Sky</h3>
+      </section>
+
+      <section id="plant-dashboard">
+        <p id="greeting">Good Morning</p>
+        <p id="plants-update">You have <span id="plants-to-water">0</span> plants to water today.</p>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- SECONDARY CONTAINER FOR LOGIN, PLANT DATABASE, AND ADD PLANT -->
+
+  <section id="secondary-container">
+  	
+	<!-- ADD PLANT CARD -->
+
+	<div id="add-plant-card" class="card" ng-controller="InputPlantController">
+    <form>
+      <input id="enter-plant" type="text" placeholder="Enter Plant Type" ng-module="searchButton" ></input>
+    </form>
+    <div class="add-plant-button">
+      <p class="add-plant">+</p>
+    </div>
+
+
+    <hr>
+    <p id="add-plant-text">Add Plant to Collection</p>
+
+  </div>
+
+	<!-- STANDARD PLANT CARD -->
+
+	<div id="plant-card" class="card">
+
+	  <img class="plant-image" src="../images/plant-placeholder.jpg" alt="plant image">
+
+	  <!-- BUTTON TO SET WATERING -->
+
+	  <div class="water-button">
+	    <img class="water-icon" src="../images/water-icon.png">
+	  </div>
+
+	  <!-- PLANT INFORMATION -->
+
+	  <p class="plant-name">Peace Lily</p>
+	  <p class="scientific-name"><i>Chlorogalum pomeridianum</i></p>
+	  <hr class="plant-card-hr">
+
+	  <!-- SOIL, SHADE & MOISTURE RATING HEADERS -->
+
+	  <p class="soil-rating rating-text">soil</p>
+	  <p class="shade-rating rating-text">shade</p>
+	  <p class="moisture-rating rating-text">moisture</p>
+
+	  <!-- SOIL, SHADE & MOISTURE ICONS -->
+
+	  <div class="rating-icons">
+	    <img class="soil-icon" src="../images/soil-icon.png">
+	    <img class="shade-icon" src="../images/shade-icon.png">
+	    <img class="moisture-icon" src="../images/moisture-icon.png">
+	  </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer></footer>
 
 </body>
-</html>
+  <script src="app.js"></script>
+<!-- ANGULAR -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
+  <script src="../app/app.module.js"></script>
+<!--   <script src="app/search-plant/search-plant.component.js"</script>-->
+<!-- <script type="text/javascript">
+$("#enter-plant").on('click', function() {
+  var searchVal = $("#enter-plant").val();
+  console.log(searchVal);
+  $.ajax({
+    type: "POST",
+    dataType: "string",
+    url: "/search",
+    data: {"someData": searchVal},
+    success: function(response) {     
+      
+    }
+  })
+  return false;
+});
+</script> -->
+
+ </html>

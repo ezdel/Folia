@@ -1,5 +1,5 @@
-$("#searchButton").on('click', function() {
-	var searchVal = $("#searchForm").val();
+$(".add-plant").on('click', function() {
+	var searchVal = $("#enter-plant").val();
 	console.log(searchVal);
 	$.ajax({
 		type: "POST",

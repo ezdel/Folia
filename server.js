@@ -70,7 +70,7 @@ app.get('/', function(req, res) {
     if (err) {
         console.log('This is where it breaks');
     } else {
-        sendFile(path.join(__dirname + '/public/index.html'));
+        sendFile(path.join(__dirname + 'public/index.html'));
     }
 });
 
