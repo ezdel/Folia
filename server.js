@@ -16,14 +16,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Pull in Express session
-app.use(session({secret: 'anything'}));
+app.use(session({secret: 'anything'}))
 
-// Pull in the function from my Passport file
 require('./config/passport')(app);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 // Connect to my db using mongojs
 var databaseUrl = "plantDB";
@@ -52,23 +47,6 @@ db.once('open', function() {
 // Bring in our Models: User & Plants
 var YourPlants = require('./models/YourPlants.js');
 var UserLibrary = require('./models/UserLibrary.js');
-
-var exampleLibrary = new UserLibrary({
-    name: "User Plant Library"
-});
-
-var useLibrary = exampleLibrary.name;
-console.log(useLibrary);
-exampleLibrary.save(function(err, doc) {
-    // log any errors
-    if (err) {
-        console.log(err);
-    }
-    // or log the doc
-    else {
-        console.log(doc);
-    }
-});
 
 // At root, render my index.html file if ther eis no error
 app.get('/', function(req, res) {
@@ -193,46 +171,42 @@ app.post('/search', function(req, res) {
 
     toTitleCase(userSearch);
 
-    db.plants.find({ "commonName": cleanSearch }, function(err, query) {
-        var plantSoil = query[0].soil;
-        var plantMoisture = query[0].moisture;
-        var plantShade = query[0].shade;
-        var plantName = query[0].commonName;
-
+    db.plants.findOne({ "commonName": cleanSearch }, function(err, query) { // This might be a textSearch
         if (err) {
-            console.log(err);
-        } else {
-            res.json(query);
-            console.log("name: " + plantName + " soil: " + plantSoil + " moisture: " + plantMoisture + " shade: " + plantShade);
-
-            var examplePlant = new YourPlants({
-                plantName: plantName,
-                moisture: plantMoisture,
-                shade: plantShade,
-                soil: plantSoil
-            });
-
-            examplePlant.save(function(err, doc) {
-                // log any errors
-                if (err) {
-                    console.log(err);
-                }
-                // or log the doc
-                else {
-                    UserLibrary.findOneAndUpdate({ 'name': useLibrary }, { $push: { 'yourPlants': doc._id } }, { new: true }, function(err, doc) {
-                        if (err) {
-                            res.send(err);
-                        } else {
-                            console.log('Go forth');
-                        }
-                    });
-                    console.log(doc);
-                }
-            });
-
-            exampleLibrary.populate('examplePlant');
-
+            return res.status(500).send(err)
         }
+        if (!query) {
+            return res.send({})
+        }
+        console.log(query, 'query')
+        res.json(query)
+        var plantSoil = query.soil;
+        var plantMoisture = query.moisture;
+        var plantShade = query.shade;
+        var plantName = query.commonName;
+
+        console.log("name: " + plantName + " soil: " + plantSoil + " moisture: " + plantMoisture + " shade: " + plantShade);
+        if (req.user && req.user.email) {
+            UserLibrary.findOne({email: req.user.email}).exec(function(err, user) {
+                if (err) {
+                    return console.log('Error occured when fetching user', err)
+                }
+                if (!user) {
+                    console.error('No user found!')
+                    return
+                }
+                user.yourPlants.push({
+                    plantName: plantName,
+                    moisture: plantMoisture,
+                    shade: plantShade,
+                    soil: plantSoil
+                })
+                user.save()
+            })
+        } else {
+            console.error("No logged in user: Very weird!!! ")
+        }
+        //}
 
     });
 });

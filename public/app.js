@@ -1,28 +1,16 @@
-$("#searchButton").on('click', function() {
+$("#searchButton").on('click', function(e) {
+	e.preventDefault();
 	var searchVal = $("#searchForm").val();
-	console.log(searchVal);
+	//console.log(searchVal);
 	$.ajax({
 		type: "POST",
-		dataType: "string",
+		dataType: "json",
 		url: "/search",
-		data: {"someData": searchVal},
-		success: function(response) {			
-			
-		}
-	})
-	return false;
-});
+		data: {"someData": searchVal}
+	}).done(function(response) {
+		console.log(response, 'response')
+		$('#result').html(JSON.stringify(response))
 
-
-$("#loginButton").on('click', function() {
-	$.ajax({
-		type: "POST",
-		dataType: "string",
-		url: "/login",
-		data: {"someData": searchVal},
-		success: function(response) {			
-			
-		}
 	})
 	return false;
 });
