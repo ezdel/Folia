@@ -188,6 +188,11 @@ ____________________________________*/
   margin: 8px 0 0 8px;
 }
 
+.water-date, .water-days {
+  text-align: left;
+  margin: 8px 0 0 8px;
+}
+
 .scientific-name {
   text-align: left;
   font-weight: 300i;
