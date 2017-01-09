@@ -32,18 +32,19 @@
 // 	SN (semi-shade to no shade): 13
 // 	N (no shade): 16
 // 	FSN (all the shades): 10
-
-// variables:
-var soilConditon;
-var waterCondition;
-var shadeCondition;
+// $(document).ready(function() {
+// // variables:
+// var soilConditon;
+// var waterCondition;
+// var shadeCondition;
 
 // grab the plant name from the card   class = plant-name
-var thisPlant = 'Swamp Onion'
-
+// var $thisPlant = $('#searchForm').val();
+// console.log("Plant:", thisPlant);
 // max pts for total algorithm:
 
-var waterScore = 0;
+
+var waterScore = 5;
 
 var express = require('express');
 // var routes = require('./routes/search.js');
@@ -94,7 +95,6 @@ app.get('/all', function(req, res) {
       var shadeCondition = found[0].shade;
       var soilConditon = found[0].soil;
     }
-
 // calculate the season
 var calculateSeason = function() {
     var date = new Date();
@@ -194,13 +194,10 @@ var evaluateScore = function() {
     }
 
 }
-
-
-calculateSeason();
-
   });
 });
 console.log('waterscore: ' + waterScore);
+
 
 app.listen(3000, function() {
   console.log('App running on port 3000!');

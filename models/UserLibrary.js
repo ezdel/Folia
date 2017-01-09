@@ -7,23 +7,26 @@ var Schema = mongoose.Schema;
 var PlantSchema = new Schema({
   // author: just a string
   plantName: {
-    type:String
+    type: String
   },
   // title: just a string
   moisture: {
-    type:String
+    type: String
   },
   shade: {
-    type:String
+    type: String
   },
   soil: {
-    type:String
+    type: String
+  },
+  waterDays: {
+    type: Number
   }
 });
 
 var UserSchema = new Schema({
   name: {
-    type:String,
+    type: String,
     unique:true
   },
   email: String,

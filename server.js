@@ -43,7 +43,6 @@ db.once('open', function() {
     console.log('Mongoose connection successful.');
 });
 
-// ***** COME BACK TO THIS ******
 // Bring in our Models: User & Plants
 var YourPlants = require('./models/YourPlants.js');
 var UserLibrary = require('./models/UserLibrary.js');
@@ -59,11 +58,6 @@ app.get('/', function(req, res) {
 
 app.use('/auth', auth);
 app.use('/users', users);
-
-// Starting to render the frontend html
-// app.get('/google', function(req, res) {
-//     res.sendFile(path.join(__dirname+'/index.html'));
-// });
 
 app.post('/submit', function(req, res) {
     var newPlant = new YourPlants(req.body);
@@ -140,7 +134,6 @@ app.get('/populated', function(req, res) {
 
 // at '/db', render the result of my query if there is no error
 app.get('/db', function(req, res) {
-    // res.send(db.plants.find({}).limit(2));
     db.plants.find({}, function(err, query) {
         if (err) {
             console.log(err);
@@ -171,7 +164,7 @@ app.post('/search', function(req, res) {
 
     toTitleCase(userSearch);
 
-    db.plants.findOne({ "commonName": cleanSearch }, function(err, query) { // This might be a textSearch
+    db.plants.findOne({ "commonName": cleanSearch }, function(err, query) { // This may be a textSearch
         if (err) {
             return res.status(500).send(err)
         }
@@ -186,10 +179,11 @@ app.post('/search', function(req, res) {
         var plantName = query.commonName;
 
         console.log("name: " + plantName + " soil: " + plantSoil + " moisture: " + plantMoisture + " shade: " + plantShade);
+        
         if (req.user && req.user.email) {
             UserLibrary.findOne({email: req.user.email}).exec(function(err, user) {
                 if (err) {
-                    return console.log('Error occured when fetching user', err)
+                    return console.log('Error occured when getting user', err)
                 }
                 if (!user) {
                     console.error('No user found!')
@@ -206,8 +200,6 @@ app.post('/search', function(req, res) {
         } else {
             console.error("No logged in user: Very weird!!! ")
         }
-        //}
-
     });
 });
 
