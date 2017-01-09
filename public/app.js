@@ -3,7 +3,7 @@ $(".add-plant").on('click', function() {
 	console.log(searchVal);
 	$.ajax({
 		type: "POST",
-		dataType: "string",
+		dataType: "JSONP",
 		url: "/search",
 		data: {"someData": searchVal},
 		success: function(response) {			

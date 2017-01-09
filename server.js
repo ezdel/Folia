@@ -177,6 +177,8 @@ app.post('/db', function(req, res) {
 });
 
 app.post('/search', function(req, res) {
+    console.log("Req: " + req);
+    console.log("Res: " + res);
     var userSearch = req.body.someData;
     var cleanSearch;
 
