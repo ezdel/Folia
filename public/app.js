@@ -1,28 +1,16 @@
-$(".add-plant").on('click', function() {
+$(".add-plant").on('click', function(e) {
 	var searchVal = $("#enter-plant").val();
+	e.preventDefault();
 	console.log(searchVal);
 	$.ajax({
 		type: "POST",
-		dataType: "JSONP",
+		dataType: "json",
 		url: "/search",
-		data: {"someData": searchVal},
-		success: function(response) {			
-			
-		}
-	})
-	return false;
-});
+		data: {"someData": searchVal}
+	}).done(function(response) {
+		console.log('response: ' + response);
+		// $('#result').html(JSON.stringify(response))
 
-
-$("#loginButton").on('click', function() {
-	$.ajax({
-		type: "POST",
-		dataType: "string",
-		url: "/login",
-		data: {"someData": searchVal},
-		success: function(response) {			
-			
-		}
 	})
 	return false;
 });

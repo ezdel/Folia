@@ -16,5 +16,5 @@ module.exports = function(app){
 	  done(null, user);
 	});
 
-	require('./googleStrategy.js')();
+	require('./strategies/googleStrategy.js')();
 };
