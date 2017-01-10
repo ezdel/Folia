@@ -1,15 +1,15 @@
-$(".add-plant").on('click', function(e) {
-	var searchVal = $("#enter-plant").val();
+$("#searchButton").on('click', function(e) {
 	e.preventDefault();
-	console.log(searchVal);
+	var searchVal = $("#searchForm").val();
+	//console.log(searchVal);
 	$.ajax({
 		type: "POST",
 		dataType: "json",
 		url: "/search",
 		data: {"someData": searchVal}
 	}).done(function(response) {
-		console.log('response: ' + response);
-		// $('#result').html(JSON.stringify(response))
+		console.log(response, 'response')
+		$('#result').html(JSON.stringify(response));
 
 	})
 	return false;
