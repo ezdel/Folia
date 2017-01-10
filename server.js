@@ -159,6 +159,12 @@ app.post('/db', function(req, res) {
     }
 });
 
+// Save current date
+app.post('/date', function(req, res) {
+    db.UserLibrary.update({ "$currentDate": { "lastModified": true,
+        }});
+});
+
 app.post('/search', function(req, res) {
     var userSearch = req.body.someData;
     var cleanSearch;

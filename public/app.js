@@ -14,3 +14,22 @@ $("#searchButton").on('click', function(e) {
 	})
 	return false;
 });
+
+
+// Current date
+
+$("#logDate").on('click', function(e) {
+	e.preventDefault();
+	// var searchVal = $("#searchForm").val();
+	$.ajax({
+		type: "POST",
+		dataType: "Date",
+		url: "/date",
+		data: {"newDate": Date}
+	}).done(function(response) {
+		console.log('response', response);
+		$('#result').html(response);
+
+	})
+	return false;
+});
