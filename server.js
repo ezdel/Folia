@@ -53,7 +53,7 @@ app.get('/', function(req, res) {
     if (err) {
         console.log('This is where it breaks');
     } else {
-        sendFile(path.join(__dirname + '/public/index.html'));
+        sendFile(path.join(__dirname + 'public/index.html'));
     }
 });
 
@@ -166,6 +166,8 @@ app.post('/date', function(req, res) {
 });
 
 app.post('/search', function(req, res) {
+    console.log("Req: " + req);
+    console.log("Res: " + res);
     var userSearch = req.body.someData;
     var cleanSearch;
 
