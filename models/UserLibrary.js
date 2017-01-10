@@ -18,6 +18,10 @@ var PlantSchema = new Schema({
   },
   soil: {
     type:String
+  },
+  lastModified: {
+    type: Date,
+    default: Date.now
   }
 });
 
