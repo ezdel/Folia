@@ -19,6 +19,12 @@ var PlantSchema = new Schema({
   soil: {
     type:String
   },
+  waterDays: {
+    type: Number
+  },
+  waterScore: {
+    type: Number
+  },
   lastModified: {
     type: Date,
     default: Date.now

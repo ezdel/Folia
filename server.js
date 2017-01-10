@@ -10,6 +10,7 @@ var mongojs = require('mongojs');
 // All of my file dependencies
 var auth = require('./routes/auth');
 var users = require('./routes/users');
+var waterAlgo = require('./water-algorithm');
 
 var app = express();
 app.use(bodyParser.json());
@@ -22,7 +23,7 @@ require('./config/passport')(app);
 
 // Connect to my db using mongojs
 var databaseUrl = "plantDB";
-var collections = ["plants", "UserLibrary", "YourPlants"];
+var collections = ["plants", "UserLibrary"];
 
 // Save mongojs to the db variable
 var db = mongojs(databaseUrl, collections);
@@ -53,7 +54,7 @@ app.get('/', function(req, res) {
     if (err) {
         console.log('This is where it breaks');
     } else {
-        sendFile(path.join(__dirname + 'public/index.html'));
+        sendFile(path.join(__dirname + '/public/index.html'));
     }
 });
 
@@ -159,15 +160,33 @@ app.post('/db', function(req, res) {
     }
 });
 
-// Save current date
+//req.params => /user/plants/:googleid
+//req.body => {googleid: 'xxxx'}
+//req.query => /user/plants?googleid='xxxx'
+// app.get('/user/plants', function(req, res) {
+//     UserLibrary.findOne(
+//         {'googleid': req.params.googleid},
+//         function(err, res) {
+//             console.log(err, res);
+//             if(res) {
+//                 return res.json(res);
+//             }
+//         }
+//     );
+// });
+
 app.post('/date', function(req, res) {
-    db.UserLibrary.update({ "$currentDate": { "lastModified": true,
-        }});
+    UserLibrary.findOneAndUpdate(
+        {'yourPlants.plantName': 'Cyclamen'},
+        {'$set': { "yourPlants.$.lastModified": new Date() } },
+        function(err, res) {
+            console.log(err, res)
+        }
+    );
 });
 
+
 app.post('/search', function(req, res) {
-    console.log("Req: " + req);
-    console.log("Res: " + res);
     var userSearch = req.body.someData;
     var cleanSearch;
 
@@ -178,7 +197,7 @@ app.post('/search', function(req, res) {
     }
 
     toTitleCase(userSearch);
-
+    var waterResult = waterAlgo(userSearch);
     db.plants.findOne({ "commonName": cleanSearch }, function(err, query) { // This might be a textSearch
         if (err) {
             return res.status(500).send(err)
@@ -186,8 +205,8 @@ app.post('/search', function(req, res) {
         if (!query) {
             return res.send({})
         }
-        console.log(query, 'query')
-        res.json(query)
+        console.log(waterResult, 'query')
+        res.json({query, waterResult})
         var plantSoil = query.soil;
         var plantMoisture = query.moisture;
         var plantShade = query.shade;
@@ -207,7 +226,9 @@ app.post('/search', function(req, res) {
                     plantName: plantName,
                     moisture: plantMoisture,
                     shade: plantShade,
-                    soil: plantSoil
+                    soil: plantSoil,
+                    waterDays: waterResult.waterDays,
+                    waterScore: waterResult.waterScore
                 })
                 user.save()
             })

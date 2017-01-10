@@ -42,21 +42,13 @@ var shadeCondition;
 var waterDays;
 
 // grab the plant name from the card   class = plant-name
-var thisPlant = 'Swamp Onion'
+// var thisPlant = 'Swamp Onion'
 
 // max pts for total algorithm:
 
 var waterScore = 0;
-
-var express = require('express');
-// var routes = require('./routes/search.js');
 var mongoose = require('mongoose');
-var path = require("path");
-var bodyParser = require('body-parser');
 
-var app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // require mongojs and connect to my db
 var mongojs = require('mongojs');
@@ -66,11 +58,8 @@ var collections = ["plants", "userlibraries", "yourplants"];
 // save mongojs to the db variable
 var db = mongojs(databaseUrl, collections);
 
-// specifies the location of static files
-app.use(express.static('public'));
-
 // start a mongoose connection
-mongoose.connect('mongodb://localhost/plantDB');
+//mongoose.connect('mongodb://localhost/plantDB');
 
 // show any mongoose errors
 db.on('error', function(err) {
@@ -78,27 +67,12 @@ db.on('error', function(err) {
 });
 
 // once logged in to the db through mongoose, log a success message
-db.once('open', function() {
-    console.log('Mongoose connection successful.');
-});
+//db.once('open', function() {
+  //  console.log('Mongoose connection successful.');
+//});
 
-app.get('/all', function(req, res) {
-  // Query: In our database, go to the yourplants collection, then "find" everything 
-  db.plants.find({commonName: thisPlant}, function(err, found) {
-    // log any errors if the server encounters one
-    if (err) {
-      console.log(err);
-    } 
-    // otherwise, send the result of this query to the browser
-    else {
-      res.json(found[0].moisture);
-
-      var waterCondition = found[0].moisture;
-      var shadeCondition = found[0].shade;
-      var soilConditon = found[0].soil;
-    }
-
-// calculate the season
+function calculateWaterAlgo(foundResult) {
+    // calculate the season
 var calculateSeason = function(waterScore) {
     var date = new Date();
     var currentMonth = date.getMonth();
@@ -203,15 +177,27 @@ var evaluateScore = function(waterScore) {
     }
 
 }
-
-
 calculateSeason(waterScore);
-
-  });
-});
 console.log('waterscore: ' + waterScore);
 console.log('water days: ' + waterDays);
+return  {
+    waterScore: waterScore,
+    waterDays: waterDays
+}
+}
 
-app.listen(3000, function() {
-  console.log('App running on port 3000!');
-});
+module.exports = function(thisPlant, next) {
+    console.log(thisPlant, "th");
+  // Query: In our database, go to the yourplants collection, then "find" everything 
+ // db.plants.find({commonName: thisPlant}, function(err, found) {
+    // log any errors if the server encounters one
+    //if (err) {
+    //  console.log(err);
+    //}
+   var calc = calculateWaterAlgo();
+   console.log(calc, 'Calculations');
+   return calc;
+ // });
+  
+}
+
