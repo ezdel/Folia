@@ -187,7 +187,7 @@ return  {
 }
 
 module.exports = function(thisPlant, next) {
-    console.log(thisPlant, "th");
+    console.log("this plant: " + thisPlant);
   // Query: In our database, go to the yourplants collection, then "find" everything 
  // db.plants.find({commonName: thisPlant}, function(err, found) {
     // log any errors if the server encounters one
@@ -195,7 +195,7 @@ module.exports = function(thisPlant, next) {
     //  console.log(err);
     //}
    var calc = calculateWaterAlgo();
-   console.log(calc, 'Calculations');
+   console.log('Calculations: ' + calc);
    return calc;
  // });
   

@@ -222,14 +222,39 @@ app.post('/search', function(req, res) {
                     console.error('No user found!')
                     return
                 }
-                user.yourPlants.push({
-                    plantName: plantName,
-                    moisture: plantMoisture,
-                    shade: plantShade,
-                    soil: plantSoil,
-                    waterDays: waterResult.waterDays,
-                    waterScore: waterResult.waterScore
-                })
+                // Hannah's old algorithm                
+                // FInd the plant that the I was searching for
+                var plant;
+                if( user.yourPlants && user.yourPlants.length ){
+                    var len = user.yourPlants.length;
+                    for(var i=0;i<len; i++){
+                        plant = user.yourPlants[i];
+                        // plant.plantName ?? does it match
+                        var match = plant.plantName===cleanSearch;
+                        if( match ) {break;}
+                    }
+                }
+
+
+
+                if(plant){
+
+                    if (plant.moisture === 'MWe') {
+                        plant.waterDays = 3;
+                    } else if( plant.moisture === '') {
+
+                    }
+
+                } else {
+                    user.yourPlants.push({
+                        plantName: plantName,
+                        moisture: plantMoisture,
+                        shade: plantShade,
+                        soil: plantSoil,
+                        waterDays: waterResult.waterDays,
+                        waterScore: waterResult.waterScore
+                    })
+                }
                 user.save()
             })
         } else {
@@ -239,6 +264,15 @@ app.post('/search', function(req, res) {
 
     });
 });
+
+app.get('/api/plants', function(req,res){
+
+    // db.request({}, function(plants){
+        // res.json(plants)
+    // })
+    res.json({ plants: [{name:'Swamp Onion'} ]})
+})
+
 
 module.exports = app;
 
