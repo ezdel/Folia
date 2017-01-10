@@ -60,6 +60,16 @@ hr {
 /* HERO CONTAINER
 ____________________________________*/
 
+#googleLogin {
+  float: right;
+  margin: 40px 40px 0 40px;
+  text-decoration: none;
+}
+
+#loginButton {
+  padding-top: 5px;
+}
+
 #hero-image {
   min-height: 568px;
   width: auto;

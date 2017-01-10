@@ -25,6 +25,12 @@
 
 <body ng-app="folia">
 
+<div>
+  <a id="googleLogin" href="/auth/google">
+    <input type="submit" value="LOGIN WITH GOOGLE" id="loginButton">
+  </a>
+  </div>
+  
   <!-- FULL-WIDTH HERO IMAGE -->
 
   <div id="hero-image">
@@ -32,7 +38,7 @@
     <!-- FOLIA LOGO -->
 
     <img id="logo" src="../images/folia-logo.png" alt="folia-logo">
-
+    
     <!-- DASHBOARD WITH CURRENT WEATHER AND PLANT INFORMATION -->
 
     <div id="dashboard-container">
@@ -55,7 +61,7 @@
   <!-- SECONDARY CONTAINER FOR LOGIN, PLANT DATABASE, AND ADD PLANT -->
 
   <section id="secondary-container">
-  	
+  
 	<!-- ADD PLANT CARD -->
 
 	<div id="add-plant-card" class="card">
@@ -125,6 +131,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
   <script src="app.js"></script>
   <script src="../app/app.module.js"></script>
-  <script src="../app/user-plants/user-plants.component.js"></script>
+  <script src="../app/user-plant/user-plant.module.js"></script>
+  <script src="../app/user-plant/user-plant.component.js"></script>
+  
 
  </html>
