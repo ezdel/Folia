@@ -4,8 +4,8 @@ var UserLibrary = require('../../models/UserLibrary.js');
 
 module.exports = function(){
 	passport.use(new googleStrategy({
-	  clientID: '934579778545-kljd7ea5kgcf8l3lenr189rumbj1ben6.apps.googleusercontent.com',
-	  clientSecret: 'RK7PBYQ4c5es4em9qct1uPrF',
+	  clientID: '154225588003-mrnn4e4q7ab2biomv1ulb7v7b2ekc8ko.apps.googleusercontent.com',
+	  clientSecret: 'cQly2MUatGGsKQWteCwjf-HN',
 	  callbackURL: 'http://localhost:3000/auth/google/callback'},
 
 	  function(req, accessToken, refreshToken, profile, done){

@@ -9,6 +9,9 @@ var PlantSchema = new Schema({
   plantName: {
     type:String
   },
+  latinName: {
+    type:String
+  },
   // title: just a string
   moisture: {
     type:String

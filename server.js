@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var mongojs = require('mongojs');
+var moment = require('moment');
 
 // All of my file dependencies
 var auth = require('./routes/auth');
@@ -116,7 +117,7 @@ app.get('/myplants', function(req, res) {
         }
         // or send the doc to the browser
         else {
-            res.send(doc);
+            res.json(doc);
         }
     });
 });
@@ -176,9 +177,10 @@ app.post('/db', function(req, res) {
 // });
 
 app.post('/date', function(req, res) {
+    var waterDate = new Date();
     UserLibrary.findOneAndUpdate(
         {'yourPlants.plantName': 'Cyclamen'},
-        {'$set': { "yourPlants.$.lastModified": new Date() } },
+        {'$set': { "yourPlants.$.lastModified": waterDate.toDateString() } },
         function(err, res) {
             console.log(err, res)
         }
@@ -211,6 +213,7 @@ app.post('/search', function(req, res) {
         var plantMoisture = query.moisture;
         var plantShade = query.shade;
         var plantName = query.commonName;
+        var latinName = query.latinName;
 
         console.log("name: " + plantName + " soil: " + plantSoil + " moisture: " + plantMoisture + " shade: " + plantShade);
         if (req.user && req.user.email) {
@@ -224,6 +227,7 @@ app.post('/search', function(req, res) {
                 }
                 user.yourPlants.push({
                     plantName: plantName,
+                    latinName: latinName,
                     moisture: plantMoisture,
                     shade: plantShade,
                     soil: plantSoil,
