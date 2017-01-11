@@ -17,14 +17,15 @@ angular.
 	  	'<hr class="plant-card-hr">' +
 
     	'<p class="water-date">Last Watered: {{plant.lastModified}}</p>' +
-    	'<p class="water-days">Next Watering: {{plant.nextWatering}}</p>' +
+    	// '<p class="water-days">Next Watering: {{plant.nextWatering}}</p>' +
 
     	'</div>',
 
 
-		controller: function PlantController($scope, $http) {
-    		this.plants = [];
-            var plants = this.plants;
+		controller: function PlantController($scope, $http, $location) {
+    		var vm = this;
+            vm.plants = [];
+            var plants = vm.plants;
             $http({
                 method: 'GET',
                 url: '/myplants'
@@ -32,10 +33,10 @@ angular.
                 for (var i = 0; i < response.data[0].yourPlants.length; i++) {
                     plants.push(response.data[0].yourPlants[i]);
                 }
-
             }, function errorCallback(response) {
                  console.log('Error: ' + response);
             });
-                   
+            $location.href = '/';
+    
   	     }
 	});
