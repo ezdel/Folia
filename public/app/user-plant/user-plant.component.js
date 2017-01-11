@@ -9,32 +9,33 @@ angular.
 
 	  	'<div class="water-button">' +
 	    '<img class="water-icon" src="../images/water-icon.png">' +
+        '<button value="date" id="logDate"></button>' +
 	  	'</div>' +
 
-	  	'<p class="plant-name">{{plant.name}}</p>' +
+	  	'<p class="plant-name">{{plant.plantName}}</p>' +
 	  	'<p class="scientific-name"><i>{{plant.sciName}}</i></p>' +
 	  	'<hr class="plant-card-hr">' +
 
-    	'<p class="water-date">Next Watering Date: {{plant.waterDate}}</p>' +
-    	'<p class="water-days">Days Remaining: {{plant.days}}</p>' +
+    	'<p class="water-date">Last Watered: {{plant.lastModified}}</p>' +
+    	'<p class="water-days">Next Watering: {{plant.nextWatering}}</p>' +
 
     	'</div>',
 
 
-		controller: function PlantController() {
-    		this.plants = [
-    		{
-    			name: 'Peace Lily',
-    			sciName: 'Chlorogalum pomeridianum',
-    			waterDate: 'January 14',
-    			days: '6'
-    		},
-    		{
-    			name: 'Hairy Huckleberry',
-    			sciName: 'Huclkeberium Harium',
-    			waterDate: 'January 12',
-    			days: '4'
-    		}
-    		];
-  		}
+		controller: function PlantController($scope, $http) {
+    		this.plants = [];
+            var plants = this.plants;
+            $http({
+                method: 'GET',
+                url: '/myplants'
+            }).then(function successCallback(response) {
+                for (var i = 0; i < response.data[0].yourPlants.length; i++) {
+                    plants.push(response.data[0].yourPlants[i]);
+                }
+
+            }, function errorCallback(response) {
+                 console.log('Error: ' + response);
+            });
+                   
+  	     }
 	});

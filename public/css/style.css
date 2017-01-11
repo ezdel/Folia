@@ -170,6 +170,10 @@ ____________________________________*/
   object-position: 50% 0%;
 }
 
+#logDate {
+  visibility: hidden;
+}
+
 .water-button {
   border-radius: 50%;
   width: 40px;

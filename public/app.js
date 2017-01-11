@@ -1,7 +1,6 @@
-$("#searchButton").on('click', function(e) {
+$(".add-plant-button").on('click', function(e) {
 	e.preventDefault();
-	var searchVal = $("#searchForm").val();
-	//console.log(searchVal);
+	var searchVal = $("#enter-plant").val();
 	$.ajax({
 		type: "POST",
 		dataType: "json",
@@ -9,7 +8,7 @@ $("#searchButton").on('click', function(e) {
 		data: {"someData": searchVal}
 	}).done(function(response) {
 		console.log(response, 'response')
-		$('#result').html(JSON.stringify(response));
+		$("#enter-plant").val("");
 
 	})
 	return false;
@@ -18,9 +17,8 @@ $("#searchButton").on('click', function(e) {
 
 // Current date
 
-$("#logDate").on('click', function(e) {
+$("#dateButton").on('click', function(e) {
 	e.preventDefault();
-	// var searchVal = $("#searchForm").val();
 	$.ajax({
 		type: "POST",
 		dataType: "Date",
@@ -28,7 +26,6 @@ $("#logDate").on('click', function(e) {
 		data: {"newDate": Date}
 	}).done(function(response) {
 		console.log('response', response);
-		$('#result').html(response);
 
 	})
 	return false;
