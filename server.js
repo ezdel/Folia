@@ -213,6 +213,7 @@ app.post('/search', function(req, res) {
         var plantMoisture = query.moisture;
         var plantShade = query.shade;
         var plantName = query.commonName;
+        var latinName = query.latinName;
 
         console.log("name: " + plantName + " soil: " + plantSoil + " moisture: " + plantMoisture + " shade: " + plantShade);
         if (req.user && req.user.email) {
@@ -226,6 +227,7 @@ app.post('/search', function(req, res) {
                 }
                 user.yourPlants.push({
                     plantName: plantName,
+                    latinName: latinName,
                     moisture: plantMoisture,
                     shade: plantShade,
                     soil: plantSoil,

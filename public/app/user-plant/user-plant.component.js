@@ -13,7 +13,7 @@ angular.
 	  	'</div>' +
 
 	  	'<p class="plant-name">{{plant.plantName}}</p>' +
-	  	'<p class="scientific-name"><i>{{plant.sciName}}</i></p>' +
+	  	'<p class="scientific-name"><i>{{plant.latinName}}</i></p>' +
 	  	'<hr class="plant-card-hr">' +
 
     	'<p class="water-date">Last Watered: {{plant.lastModified}}</p>' +
