@@ -1,7 +1,7 @@
 $("#searchButton").on('click', function(e) {
 	e.preventDefault();
 	var searchVal = $("#searchForm").val();
-	//console.log(searchVal);
+	console.log(searchVal);
 	$.ajax({
 		type: "POST",
 		dataType: "json",

@@ -116,7 +116,7 @@ app.get('/myplants', function(req, res) {
         }
         // or send the doc to the browser
         else {
-            res.send(doc);
+            res.json(doc);
         }
     });
 });
@@ -160,25 +160,12 @@ app.post('/db', function(req, res) {
     }
 });
 
-//req.params => /user/plants/:googleid
-//req.body => {googleid: 'xxxx'}
-//req.query => /user/plants?googleid='xxxx'
-// app.get('/user/plants', function(req, res) {
-//     UserLibrary.findOne(
-//         {'googleid': req.params.googleid},
-//         function(err, res) {
-//             console.log(err, res);
-//             if(res) {
-//                 return res.json(res);
-//             }
-//         }
-//     );
-// });
-
 app.post('/date', function(req, res) {
+    var waterDate = new Date();
+    console.log(waterDate.toDateString());
     UserLibrary.findOneAndUpdate(
         {'yourPlants.plantName': 'Cyclamen'},
-        {'$set': { "yourPlants.$.lastModified": new Date() } },
+        {'$set': { "yourPlants.$.lastModified": waterDate } },
         function(err, res) {
             console.log(err, res)
         }
@@ -205,8 +192,8 @@ app.post('/search', function(req, res) {
         if (!query) {
             return res.send({})
         }
-        console.log(waterResult, 'query')
-        res.json({query, waterResult})
+        // console.log(waterResult, 'query')
+        // res.json({query, waterResult})
         var plantSoil = query.soil;
         var plantMoisture = query.moisture;
         var plantShade = query.shade;
@@ -224,28 +211,27 @@ app.post('/search', function(req, res) {
                 }
                 // Hannah's old algorithm                
                 // FInd the plant that the I was searching for
-                var plant;
-                if( user.yourPlants && user.yourPlants.length ){
-                    var len = user.yourPlants.length;
-                    for(var i=0;i<len; i++){
-                        plant = user.yourPlants[i];
-                        // plant.plantName ?? does it match
-                        var match = plant.plantName===cleanSearch;
-                        if( match ) {break;}
-                    }
-                }
+                // var plant;
 
+                // if( user.yourPlants && user.yourPlants.length ){
+                //     var len = user.yourPlants.length;
+                //     for(var i=0;i<len; i++){
+                //         plant = user.yourPlants[i];
+                //         // plant.plantName? How to figure this out?
+                //         var match = plant.plantName===cleanSearch;
+                //         
+                //     }
+                // }
 
+                // if(plant){
 
-                if(plant){
+                //     if (plant.moisture === 'MWe') {
+                //         plant.waterDays = 3;
+                //     } else if( plant.moisture === '') {
 
-                    if (plant.moisture === 'MWe') {
-                        plant.waterDays = 3;
-                    } else if( plant.moisture === '') {
+                //     }
 
-                    }
-
-                } else {
+                 else {
                     user.yourPlants.push({
                         plantName: plantName,
                         moisture: plantMoisture,
@@ -265,13 +251,13 @@ app.post('/search', function(req, res) {
     });
 });
 
-app.get('/api/plants', function(req,res){
+// app.get('/api/plants', function(req,res){
 
-    // db.request({}, function(plants){
-        // res.json(plants)
-    // })
-    res.json({ plants: [{name:'Swamp Onion'} ]})
-})
+//     db.UserLibrary.find({}, function(plants){
+//         res.json(plants)
+//     })
+//     res.json({ plants: [{name:'Swamp Onion'} ]})
+// })
 
 
 module.exports = app;

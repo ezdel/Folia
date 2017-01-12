@@ -152,34 +152,34 @@ var calculateShade = function(waterScore) {
 
 // function for finding watering score:
 var evaluateScore = function(waterScore) {
-    console.log('this waterscore: ' + waterScore);
+    // console.log('this waterscore: ' + waterScore);
     if (0 <= waterScore && waterScore <= 30) {
         waterDays = 14;
-        console.log('water every 2 weeks')
+        // console.log('water every 2 weeks')
     } else if (31 <= waterScore && waterScore <= 40) {
         waterDays = 10;
-        console.log('water every 10 days')
+        // console.log('water every 10 days')
     } else if (41 <= waterScore && waterScore <= 45) {
         waterDays = 7;
-        console.log('water every 7 days')
+        // console.log('water every 7 days')
     } else if (46 <= waterScore && waterScore <= 60) {
         waterDays = 5;
-        console.log('water every 5 days')
+        // console.log('water every 5 days')
     } else if (61 <= waterScore && waterScore <= 75) {
         waterDays = 3;
-        console.log('water every 3 days')
+        // console.log('water every 3 days')
     } else if (76 <= waterScore && waterScore <= 90) {
         waterDays = 2;
-        console.log('water every other day')
+        // console.log('water every other day')
     } else if (waterScore >= 91) {
         waterDays = 1;
-        console.log('water every day')
+        // console.log('water every day')
     }
 
 }
 calculateSeason(waterScore);
-console.log('waterscore: ' + waterScore);
-console.log('water days: ' + waterDays);
+// console.log('waterscore: ' + waterScore);
+// console.log('water days: ' + waterDays);
 return  {
     waterScore: waterScore,
     waterDays: waterDays
@@ -195,7 +195,7 @@ module.exports = function(thisPlant, next) {
     //  console.log(err);
     //}
    var calc = calculateWaterAlgo();
-   console.log('Calculations: ' + calc);
+   // console.log('Calculations: ' + calc);
    return calc;
  // });
   
