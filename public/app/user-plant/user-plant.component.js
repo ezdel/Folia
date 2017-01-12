@@ -22,10 +22,14 @@ angular.
     	'</div>',
 
 
-		controller: function PlantController($scope, $http, $location) {
+		controller: function PlantController($scope, $http) {
     		var vm = this;
             vm.plants = [];
             var plants = vm.plants;
+
+            vm.loadPage = function loadPage(plants){
+                return plants;
+            };
             $http({
                 method: 'GET',
                 url: '/myplants'
@@ -33,10 +37,11 @@ angular.
                 for (var i = 0; i < response.data[0].yourPlants.length; i++) {
                     plants.push(response.data[0].yourPlants[i]);
                 }
+                vm.loadPage(plants);
             }, function errorCallback(response) {
                  console.log('Error: ' + response);
             });
-            $location.href = '/';
+            
     
   	     }
 	});
